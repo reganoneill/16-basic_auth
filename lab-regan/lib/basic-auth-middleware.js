@@ -6,6 +6,7 @@ const debug = require('debug')('cfgram:basic-auth-middleware');
 module.exports = function(req, res, next){
   debug('basic auth');
 
+
   var authHeader = req.headers.authorization;
 
   if(!authHeader){

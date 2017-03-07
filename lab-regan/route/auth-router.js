@@ -13,9 +13,10 @@ authRouter.post('/api/signup', jsonParser, function(req, res, next){
   debug('POST: /api/signup');
 
   //i added this
-  // if(!req.body){
-  //   return next(createError(400,'Bad Request'));
-  // };
+  if(!req.body){
+    debug('test!');
+    return next(createError(400,'Bad Request'));
+  };
   //done
 
   let password = req.body.password;

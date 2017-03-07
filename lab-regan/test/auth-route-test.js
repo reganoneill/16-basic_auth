@@ -3,8 +3,6 @@
 const debug = require('debug')('cfgram:auth-route-test');
 const expect = require('chai').expect;
 const request = require('superagent');
-// const mongoose = require('mongoose');
-// const Promise = require('bluebird');
 const User = require('../model/user.js');
 
 require('../server.js');
@@ -25,7 +23,6 @@ describe('Auth Routes', function(){
         .catch(done);
       });
       it('should return a token', done => {
-        debug('in heeeeeeere!');
         request.post(`${url}/api/signup`)
         .send(exampleUser)
         .end((err, res) => {
@@ -36,8 +33,22 @@ describe('Auth Routes', function(){
         });
       });
     });
-  });//end post test
 
+    describe('with an invalid body', function(){
+      it('should return a 400', done => {
+        request.post(`${url}/api/signup`)
+        .send()
+        .end((err, res) => {
+          // if(err) return done(err);
+          debug(err.name);
+          debug(err.status);
+          debug(err.message);
+          expect(err.status).to.equal(400);
+          done();
+        });
+      });
+    });
+  });//end post test
 
   describe('GET: /api/signin', function(){
       describe('with a valid body', function(){
@@ -68,10 +79,5 @@ describe('Auth Routes', function(){
           });
         });
       });
-    });
-
-
-
-
-
+    });//end GET /api/signin
 });
