@@ -28,7 +28,7 @@ describe('Auth Routes', function(){
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
-          // expect(res.text).to.be.a('string');
+          expect(res.text).to.be.a('string');
           done();
         });
       });
@@ -39,11 +39,20 @@ describe('Auth Routes', function(){
         request.post(`${url}/api/signup`)
         .send()
         .end((err, res) => {
-          // if(err) return done(err);
-          debug(err.name);
-          debug(err.status);
-          debug(err.message);
+          expect(err).to.be.an('error');
           expect(err.status).to.equal(400);
+          done();
+        });
+      });
+    });
+
+    describe('with an invalid path', function(){
+      it('should return a 404', done => {
+        request.post(`${url}/apr`)
+        .send()
+        .end((err, res) => {
+          debug(err.status);
+          expect(err.status).to.equal(404);
           done();
         });
       });
@@ -51,6 +60,19 @@ describe('Auth Routes', function(){
   });//end post test
 
   describe('GET: /api/signin', function(){
+
+    describe('with an invalid request', function(){
+      it('should return a 404', done => {
+        request.get(`${url}/api/test`)
+        .send()
+        .end((err, res) => {
+          expect(err).to.be.an('error');
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+
       describe('with a valid body', function(){
         before( done => {
           let user = new User(exampleUser);
@@ -78,6 +100,34 @@ describe('Auth Routes', function(){
             done();
           });
         });
+      });//get
+
+      describe('with an invalid credentials (password)', function(){
+        before( done => {
+          let user = new User(exampleUser);
+          user.generatePasswordHash(exampleUser.password)
+          .then( user => user.save())
+          .then( user => {
+            this.tempUser = user;
+            done();
+          })
+          .catch(done);
+        });
+        after( done => {
+          User.remove({})
+          .then( () => done())
+          .catch(done);
+        });
+        it('should return a 401', done => {
+          request.get(`${url}/api/signin`)
+          .auth('exampleuser', '0000')
+          .end((err, res) => {
+            expect(err).to.be.an('error');
+            expect(res.status).to.equal(401);
+            done();
+          });
+        });
       });
+
     });//end GET /api/signin
 });

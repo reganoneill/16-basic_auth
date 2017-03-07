@@ -30,7 +30,7 @@ module.exports = function(err, req, res, next){
     return;
   };
 
-  err = createError(500, err.message);
+  err = createError(404, err.message);
   res.status(err.status).send(err.name);
   next();
 };
