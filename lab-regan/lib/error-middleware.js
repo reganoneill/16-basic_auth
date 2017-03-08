@@ -12,6 +12,7 @@ module.exports = function(err, req, res, next){
 //400 solution
   if(err.message === 'data and salt arguments required'){
     err = createError(400, 'so bad');
+    debug(err.status);
     res.status(err.status).send(err.name);
     next();
     return;

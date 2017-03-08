@@ -1,15 +1,17 @@
 'use strict';
 
 const express = require('express');
-const Promise = require('bluebird');
-const debug = require('debug')('cfgram:server');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const Promise = require('bluebird');
+const debug = require('debug')('cfgram:server');
 
-const authRouter = require('./route/auth-router.js');
 const errors = require('./lib/error-middleware.js');
+const authRouter = require('./route/auth-router.js');
+const galleryRouter = require('./route/gallery-router.js');
+
 
 dotenv.load();
 
@@ -22,6 +24,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 app.use(authRouter);
+app.use(galleryRouter);
 app.use(errors);
 
 app.listen(PORT,  () => {
