@@ -21,8 +21,14 @@ const app = express();
 
 mongoose.connect(process.env.MONGODB_URI);
 
+//do i need to end the following line with a ';'????
+let morganFormat = process.env.PRODUCTION ? 'common' : 'dev'
+
+
+
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan(morganFormat));
+// app.use(morgan('dev'));
 
 app.use(authRouter);
 app.use(galleryRouter);
