@@ -17,7 +17,6 @@
 .nfs*
 
 ###Local Files###
-data/
 
 ### Node ###
 # Logs

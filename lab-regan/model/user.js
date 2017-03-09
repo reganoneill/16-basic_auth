@@ -45,10 +45,12 @@ userSchema.methods.generateFindHash = function(){
     let tries = 0;
     _generateFindHash.call(this);
     function _generateFindHash(){
+      debug('ok we are also herererere');
       this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
       .then( () => resolve(this.findHash))
       .catch( err => {
+        debug('we are in the catch statement');
         if(tries > 3) return reject(err);
         tries++;
         _generateFindHash.call(this);

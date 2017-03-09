@@ -11,6 +11,7 @@ const debug = require('debug')('cfgram:server');
 const errors = require('./lib/error-middleware.js');
 const authRouter = require('./route/auth-router.js');
 const galleryRouter = require('./route/gallery-router.js');
+const picRouter = require('./route/pic-router.js');
 
 
 dotenv.load();
@@ -25,8 +26,11 @@ app.use(morgan('dev'));
 
 app.use(authRouter);
 app.use(galleryRouter);
+app.use(picRouter);
 app.use(errors);
 
-app.listen(PORT,  () => {
-  debug(`server up on port ${PORT}`);
+const server = module.exports = app.listen(PORT, () => {
+  debug(`server up on ${PORT}`);
 });
+
+server.isRunning = true;
