@@ -3,7 +3,7 @@
     - 'stable'
   branches:
   only:
-    - staging
+    - master
   services:
     - mongodb
   addons:
