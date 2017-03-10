@@ -9,7 +9,7 @@ exports.uploadMock = {
   Location: 'https://mockedouturl.com/mockme.png',
   Key: '1234.png',
   key: '1234.png',
-  Bucket: 'cfgram'
+  Bucket: 'cfgrambackend-rko'
 };
 
 AWS.mock('S3', 'upload', function(params, callback) {
