@@ -28,7 +28,7 @@ const exampleGallery = {
   name: 'test gallery',
   desc: 'test gallery description'
 };
-
+let test;
 const examplePic = {
   name: 'example pic',
   desc: 'example pic description',
