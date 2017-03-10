@@ -9,8 +9,13 @@ const debug = require('debug')('cfgram:gallery-route-test');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
+const Pic = require('../model/pic.js');
 const Gallery = require('../model/gallery.js');
 const User = require('../model/user.js');
+
+const serverToggle = require('./lib/server-toggle.js');
+const server = require('../server.js');
+
 
 const url = `http://localhost:${process.env.PORT}`;
 
@@ -33,6 +38,14 @@ const exampleBadUpdatedGallery = {
 const badID = 6666666666666;
 
 describe('Gallery Routes', function(){
+
+  before( done => {
+  serverToggle.serverOn(server, done);
+});
+
+after( done => {
+  serverToggle.serverOff(server, done);
+});
 
   afterEach( done => {
       Promise.all([
