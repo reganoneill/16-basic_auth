@@ -18,6 +18,8 @@
 
 ###Local Files###
 
+.env
+
 ### Node ###
 # Logs
 logs
